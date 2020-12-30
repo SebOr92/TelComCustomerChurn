@@ -249,7 +249,7 @@ cats = ["gender", "SeniorCitizen", "Partner", "Dependents", "PhoneService", "Mul
 nums = ["tenure","MonthlyCharges","TotalCharges"]
 
 # EDA
-#exploratory_data_analysis(data, cats, nums, True, True, False)
+exploratory_data_analysis(data, cats, nums, True, True, False)
 
 # Define variables that are to be dropped. Create train and test set with one-hot encoded features and encoded target.
 to_drop = ["gender"]
@@ -264,4 +264,4 @@ optimized_model = xgb.XGBClassifier(**best,random_state=random_seed)
 model = xgb.XGBClassifier(random_state=random_seed)
 
 # Evaluate optimized model
-evaluate_model(optimized_model, X_train, X_test, y_train, y_test, cv, 'balanced_accuracy', random_seed, True)
+evaluate_model(optimized_model, X_train, X_test, y_train, y_test, cv, 'balanced_accuracy', random_seed, False)
