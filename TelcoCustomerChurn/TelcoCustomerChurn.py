@@ -183,7 +183,7 @@ def tune_xgb(seed, scoring):
     print(best_xgb)
     return best_xgb
 
-def evaluate_model(model, X_train, X_test, y_train, y_test, cv, scoring, seed):
+def evaluate_model(model, X_train, X_test, y_train, y_test, cv, scoring, seed, save = False):
 
     # Cross-validate model on training data to estimate performance
     cv_results = cross_val_score(model, X_train, y_train, cv=cv, scoring=scoring, verbose=2, n_jobs=-1)
@@ -204,8 +204,10 @@ def evaluate_model(model, X_train, X_test, y_train, y_test, cv, scoring, seed):
     # Precision/Recall curved is favored in imbalanced classification tasks
     plot_precision_recall_curve(model, X_test, y_test) 
     plt.title('Precision/Recall curve')
+    if save:
+        plt.savefig(fname="PrecisionRecallCurve.png")
     plt.show()   
-
+    
     cm = confusion_matrix(y_true, y_pred)
     ax = sns.heatmap(cm,
                  annot=True,
@@ -219,6 +221,8 @@ def evaluate_model(model, X_train, X_test, y_train, y_test, cv, scoring, seed):
     plt.xlabel('Predicted Labels')
     plt.ylabel('True Labels')
     plt.title('Confusion Matrix test set')
+    if save:
+        plt.savefig(fname="ConfusionMatrix.png")
     plt.show()
 
 # Set random seed, load the dataset and check its shape and datatypes
@@ -245,7 +249,7 @@ cats = ["gender", "SeniorCitizen", "Partner", "Dependents", "PhoneService", "Mul
 nums = ["tenure","MonthlyCharges","TotalCharges"]
 
 # EDA
-exploratory_data_analysis(data, cats, nums, True, True, True)
+#exploratory_data_analysis(data, cats, nums, True, True, False)
 
 # Define variables that are to be dropped. Create train and test set with one-hot encoded features and encoded target.
 to_drop = ["gender"]
@@ -260,4 +264,4 @@ optimized_model = xgb.XGBClassifier(**best,random_state=random_seed)
 model = xgb.XGBClassifier(random_state=random_seed)
 
 # Evaluate optimized model
-evaluate_model(optimized_model, X_train, X_test, y_train, y_test, cv, 'balanced_accuracy', random_seed)
+evaluate_model(optimized_model, X_train, X_test, y_train, y_test, cv, 'balanced_accuracy', random_seed, True)
