@@ -37,11 +37,13 @@ In the last step the model is evaluated by using different metrics. First, the p
 10-fold stratified cross validation with a given scoring function. Next, the model predicts the test data and is evaluated using balanced accuracy, 
 ROC curve, ROC AUC score and a confusion matrix. 
 
-The best model was able to score a balanced accuracy score of about 71.5% on the test set with a ROC AUC score of 0.86.
+The best model was able to score a balanced accuracy score of about 71.5% on the test set with a ROC AUC score of 0.86. The score of 71.3% on the training
+data indicates, that the model doesn't overfit.
 The confusion matrix shows, that the model does well at finding not-churning customers, but has problem with finding churing customers. This is 
 further supported by the Precision/Recall curve.
 This behaviour is due to the imbalance in the dataset and could further be tackled by trying more sampling techniques or changing the scoring 
 function in the hyperparameter optimization process.
+Depending on the worse of type of error, the parameters could be tuned again using for example F0.5 or F2 scores, depending on the importance of error types.
 
-The results where achieved by dropping the "gender"-column, z-transforming numerical data and optimizing the hyperparameters.
+The results where achieved by dropping the "gender" column, z-transforming numerical data and optimizing the hyperparameters.
 
